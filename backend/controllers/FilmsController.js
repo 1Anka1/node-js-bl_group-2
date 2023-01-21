@@ -1,13 +1,12 @@
 const Film = require("../models/Film");
+const asyncHandler = require("express-async-handler");
 
 class FilmsController {
-  add = async (req, res) => {
+  add = asyncHandler(async (req, res) => {
     const { title } = req.body;
     if (!title) {
-      return res.status(400).json({
-        code: 400,
-        message: "Provide all required fields",
-      });
+      res.status(400);
+      throw new Error("Provide all required fields");
     }
     const film = await Film.create({ ...req.body });
     if (!film) {
@@ -21,7 +20,8 @@ class FilmsController {
       message: "Save success!",
       data: film,
     });
-  };
+  });
+
   fetchAll(req, res) {
     res.send("controllerFetchAll");
   }
