@@ -6,7 +6,9 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node backend/server.js ",
     "dev": "cross-env NODE_ENV=development nodemon backend/server.js",
-    "client": "npm start --prefix frontend"
+    "client": "npm start --prefix frontend",
+    "wp:prod": "webpack --mode=production",
+    "wp:dev": "webpack --mode=development"
   },
   "keywords": [],
   "author": "Anna Kasianenko <annakasjanenko@rambler.ru>",
@@ -17,8 +19,20 @@
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
     "express-async-handler": "^1.2.0",
+    "express-handlebars": "^6.0.7",
     "mongoose": "^6.8.1",
+    "nodemailer": "^6.9.0",
     "nodemon": "^2.0.20",
     "react": "^18.2.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.20.12",
+    "@babel/preset-env": "^7.20.2",
+    "babel-loader": "^9.1.2",
+    "css-loader": "^6.7.3",
+    "mini-css-extract-plugin": "^2.7.2",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.75.0",
+    "webpack-cli": "^5.0.1"
   }
 }
