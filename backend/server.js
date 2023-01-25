@@ -3,6 +3,7 @@ const dotenv = require("dotenv");
 const express = require("express");
 
 const { engine } = require("express-handlebars");
+const { engine } = require('express-handlebars');
 
 const app = express();
 
@@ -12,6 +13,10 @@ const sendEmail = require("./servises/sendEmail");
 app.engine("handlebars", engine());
 app.set("view engine", "handlebars");
 app.set("views", "backend/views");
+
+app.engine('handlebars', engine());
+app.set('view engine', 'handlebars');
+app.set('views', 'backend/views');
 
 //JSON parse from body
 app.use(express.json());
@@ -76,6 +81,29 @@ app.post("/send", async (req, res) => {
     }
 });
 
+app.get('/', (req, res) => {
+    res.render('home');
+});
+
+app.get('/contact', (req, res) => {
+    res.render('contact');
+});
+
+app.get('/about', (req, res) => {
+    res.render('about');
+});
+
+app.post('/send', async (req, res) => {
+  // res.send(req.body);
+ try {
+      await  sendEmail(req.body);
+  res.render("send", {msg:"Contact send success", userName:req.body.userName, userEmail:req.body.userEmail})
+ } catch (error) {
+  console.log(error)
+ }
+  
+})
+
 const errorHandler = require("../middleware/errorHandler");
 app.use(errorHandler);
 
@@ -88,3 +116,4 @@ app.listen(process.env.PORT, () => {
         `Server is running on ${process.env.PORT} ,  mode: ${process.env.NODE_ENV}  `
     );
 });
+
